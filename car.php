@@ -1,4 +1,5 @@
 <?php
+ini_set('memory_limit', '-1');
 function getCsvData($fileName)
 {
     if (!file_exists("$fileName")){
@@ -17,23 +18,23 @@ function getCsvData($fileName)
     return [$car, $header];
 }
 
-$data = getCsvData("car-db.csv")[0];
+$carsData = getCsvData("car-db.csv")[0];
 $header = getCsvData("car-db.csv")[1];
 
 $brandKey = array_search('make', $header);
 $modelKey = array_search('model', $header);
 
-$car = [];
-if (!empty($data)){
-    $maker = '';
-    $model = '';
-    foreach ($data as $id => $line){
-        if($maker != $line[$brandKey]){
-            $maker = $line[$brandKey];
-        }
-        if($model != $line[$modelKey]){
-            $model = $line[$modelKey];
-            $car[$maker][] = $model;
-        }
+function getData($carsData, $brandKey, $modelKey){
+    $result = [];
+    foreach ($carsData as $oneLine){
+        $maker = $oneLine[$brandKey];
+        $model = $oneLine[$modelKey];
+        $result[$maker] = $model;
     }
+    return[$result];
 }
+getCsvData('car-db.csv');
+$result = getData($carsData, $brandKey, $modelKey);
+
+
+
