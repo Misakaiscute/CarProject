@@ -25,7 +25,8 @@ $brandKey = array_search('make', $header);
 $modelKey = array_search('model', $header);
 
 function getData($carsData, $brandKey, $modelKey){
-    $result = [];
+    $makers = '';
+    $models = '';
     foreach ($carsData as $oneLine){
         $maker = $oneLine[$brandKey];
         $model = $oneLine[$modelKey];
@@ -35,6 +36,17 @@ function getData($carsData, $brandKey, $modelKey){
 }
 getCsvData('car-db.csv');
 $result = getData($carsData, $brandKey, $modelKey);
+
+function getMakers($result){
+    $makers = [];
+    foreach ($result as $OneMakers => $OneModels){
+        $makers = $OneMakers;
+    }
+
+    return $makers;
+}
+
+$makers = getMakers($result);
 
 
 
