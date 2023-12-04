@@ -25,16 +25,17 @@ $brandKey = array_search('make', $header);
 $modelKey = array_search('model', $header);
 
 function getData($carsData, $brandKey, $modelKey){
-    $makers = '';
-    $models = '';
+    $result = array();
     foreach ($carsData as $oneLine){
-        $maker = $oneLine[$brandKey];
-        $model = $oneLine[$modelKey];
-        $result[$maker] = $model;
+        $makers = $oneLine[$brandKey];
+        $models = $oneLine[$modelKey];
+        $result[$makers] = $models;
     }
-    return[$result];
+    return $result;
 }
+
 getCsvData('car-db.csv');
+
 $result = getData($carsData, $brandKey, $modelKey);
 
 function getMakers($result){
@@ -47,6 +48,18 @@ function getMakers($result){
 }
 
 $makers = getMakers($result);
+
+$carTools = new MakerDbTools();
+
+$error = [];
+foreach ($makers as $maker){
+    $result = $carTools->createMaker($maker);
+    if (!$result) {$error[] = $result;}
+
+    echo "$maker\n";
+}
+
+
 
 
 
