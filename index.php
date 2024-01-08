@@ -34,6 +34,11 @@
             header("Refresh:0");
         }
 
+        if (isset($_POST['btn-del'])){
+            $DBMaker->delete($_POST['btn-del']);
+            header("Refresh:0");
+        }
+
         if(isset($_POST['input-file'])){
             require_once("csv-tools.php");
             $fileName = $_POST['input-file'];
