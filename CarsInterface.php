@@ -1,5 +1,4 @@
 <?php
-namespace Cars;
 interface CarsInterface
 {
     public function create(array $data) : ?int;

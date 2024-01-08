@@ -1,7 +1,5 @@
 <?php
 
-namespace Cars;
-
 use Cars\CarsInterface;
 
 class DBModels extends \DB implements CarsInterface
