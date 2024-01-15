@@ -88,9 +88,9 @@ class Page
         echo "<div style='display: flex'>";
         foreach ($abc as $ch) {
             echo "
-            <form method='post' action='index.php'>
-                <input type='hidden' name='ch' value='$ch'>
-                <button type='submit'>$ch</button>&nbsp;
+            <form method='post' action='makers.php'>
+                <input type='hidden' name='ch' value='" . $ch['ch'] . "'>
+                <button type='submit'>" . $ch['ch'] . "</button>
             </form>
             ";
         }

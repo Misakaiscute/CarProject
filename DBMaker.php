@@ -4,16 +4,17 @@ require 'CarsInterface.php';
 require 'DB.php';
 class DBMaker extends DB implements CarsInterface
 {
-    public function create(array $data) : ?int{
-        $sql = "INSERT INTO Manufacturers $data";
-        $this->mysqli->query($sql);
+    public function createDB(array $data) : ?int{
+        $this->mysqli->query("CREATE OR REPLACE TABLE TABLE manufacturers(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50))");
 
-        $lastInserted = $this->mysqli->query("SELECT LAST_INSERT_ID() id;")->fetch_assoc();
-
-        return $lastInserted['id'];
+        foreach ($data as $oneData){
+            $this->mysqli->query("INSERT INTO manufacturers (name) VALUES ($oneData)");
+        }
     }
     public function get(int $id) : array{
+        $sql = "SELECT * FROM manufacturers WHERE id = $id";
 
+        return $this->mysqli->query($sql)->fetch_assoc(MYSQLI_ASSOC);
     }
     public function getAll() : array{
         $sql = "SELECT * FROM manufacturers ORDER BY name";
@@ -42,21 +43,21 @@ class DBMaker extends DB implements CarsInterface
 
         return $this->mysqli->query($sql)->fetch_all(MYSQLI_ASSOC);
     }
-    public function getByFirstCh($ch){
+    public function getByFirstCh($ch) : array{
         $sql = "SELECT * FROM manufacturers WHERE name LIKE '$ch%' ORDER BY name";
 
         return $this->mysqli->query($sql)->fetch_all(MYSQLI_ASSOC);
     }
-    public function getCount(){
+    public function getCount() : int{
         $sql = "SELECT COUNT(*) AS Count FROM manufacturers";
-
-        $this->mysqli->query($sql);
-    }
-    public function truncate(){
-        $sql = "TRUNCATE TABLE manufacturers";
 
         $result = $this->mysqli->query($sql)->fetch_assoc();
 
         return $result['Count'];
+    }
+    public function truncate(){
+        $sql = "TRUNCATE TABLE manufacturers";
+
+        $this->mysqli->query($sql);
     }
 }

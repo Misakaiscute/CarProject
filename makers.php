@@ -50,7 +50,7 @@
             $makers = getMakers($csvData);
             $errors = [];
             foreach ($makers as $maker){
-                $result = $DBMaker->create(['name' => $maker]);
+                $result = $DBMaker->createDB(['name' => $maker]);
                 if(!$result){
                     $errors[] = $maker;
                 }
